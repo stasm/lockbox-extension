@@ -85,6 +85,7 @@ export default {
     "webextension/manage/index": "./webextension/manage/index.js",
     "webextension/firstrun/index": "./webextension/firstrun/index.js",
     "webextension/popup/unlock/index": "./webextension/popup/unlock/index.js",
+    "webextension/settings/index": "./webextension/settings/index.js",
   },
 
   output: {
@@ -144,6 +145,15 @@ export default {
       inject: false,
       minify: htmlMinifyOptions,
       title: "Unlock",
+      icon: "../icons/lock.png",
+    }),
+    new HTMLWebpackPlugin({
+      template: "template.ejs",
+      filename: "webextension/settings/index.html",
+      chunks: ["webextension/settings/index"],
+      inject: false,
+      minify: htmlMinifyOptions,
+      title: "Lockbox Settings",
       icon: "../icons/lock.png",
     }),
     new XMLWebpackPlugin({files: [{
