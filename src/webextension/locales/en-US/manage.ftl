@@ -9,6 +9,11 @@ toolbar-send-feedback = Feedback
 
 item-filter.placeholder = Search for an entry
 
+item-list-empty =
+  Looks like you don't have any entries saved yet…
+  
+  Create a new entry so Lockie has something to protect.
+
 item-summary-new-item = New Entry
 item-summary-no-title = (No Entry Name)
 item-summary-no-username = (No Username)

@@ -17,30 +17,50 @@ chai.use(sinonChai);
 
 describe("manage > components > <ItemList/>", () => {
   let onItemSelected, wrapper;
-  const items = [
-    {id: "0", title: "title 0", username: "username 0"},
-    {id: "1", title: "title 1", username: "username 1"},
-    {id: "2", title: "title 2", username: "username 2"},
-  ];
 
   beforeEach(() => {
     onItemSelected = sinon.spy();
-    wrapper = mountWithL10n(
-      <ItemList items={items} selected={items[0].id}
-                onItemSelected={onItemSelected}/>
-    );
   });
 
-  it("render all items", () => {
-    expect(wrapper.find(ItemSummary)).to.have.length(3);
+  describe("empty list", () => {
+    beforeEach(() => {
+      wrapper = mountWithL10n(
+        <ItemList items={[]} onItemSelected={onItemSelected}/>
+      );
+    });
+
+    it("render placeholder", () => {
+      expect(wrapper.find("div")).to.have.text(
+        "lOOKs lIKe yOu dON't hAVe aNy eNTRIEs sAVEd yEt..."
+      );
+    });
   });
 
-  it("correct item is selected", () => {
-    expect(wrapper.find("li").at(0)).to.have.prop("data-selected", true);
-  });
+  describe("filled list", () => {
+    const items = [
+      {id: "0", title: "title 0", username: "username 0"},
+      {id: "1", title: "title 1", username: "username 1"},
+      {id: "2", title: "title 2", username: "username 2"},
+    ];
 
-  it("onItemSelected called", () => {
-    wrapper.find(ItemSummary).at(0).simulate("mousedown");
-    expect(onItemSelected).to.have.been.calledWith(items[0].id);
+    beforeEach(() => {
+      wrapper = mountWithL10n(
+        <ItemList items={items} selected={items[0].id}
+                  onItemSelected={onItemSelected}/>
+      );
+    });
+
+    it("render all items", () => {
+      expect(wrapper.find(ItemSummary)).to.have.length(3);
+    });
+
+    it("correct item is selected", () => {
+      expect(wrapper.find("li").at(0)).to.have.prop("data-selected", true);
+    });
+
+    it("onItemSelected called", () => {
+      wrapper.find(ItemSummary).at(0).simulate("mousedown");
+      expect(onItemSelected).to.have.been.calledWith(items[0].id);
+    });
   });
 });
